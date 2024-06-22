@@ -120,3 +120,14 @@ if general_info_button:
 
     # mostrar un gráfico Plotly interactivo
     st.plotly_chart(fig, use_container_width=True)
+
+
+table_prueba_button = st.button('Contruct Prueba Table')
+
+if table_prueba_button:
+
+    st.write('Creating a prueba table for the car sale ads dataser')
+
+    fig = st.dataframe(df)
+
+    st.plotly_chart(fig, use_container_width=True)
