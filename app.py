@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 
 df = pd.read_csv('vehicles_us.csv')
 
@@ -11,7 +12,6 @@ luego cambiamos el formato a int y por ultimo sustituimos los 0 por "unknown"
 
 df['model_year'] = df['model_year'].fillna(0)
 df['model_year'] = df['model_year'].astype('int')
-# df['model_year'] = df['model_year'].replace(0, 'unknown')
 
 '''Sustituimos los datos ausentes por un 0 en la columna "cylinders" 
 luego cambiamos el formato a int y por ultimo sustituimos los 0 por "unknown"
