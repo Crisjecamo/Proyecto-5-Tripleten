@@ -6,44 +6,43 @@ import plotly.graph_objects as go
 df = pd.read_csv('vehicles_us.csv')
 
 
-'''Sustituimos los datos ausentes por un 0 en la columna "model_year" 
-luego cambiamos el formato a int y por ultimo sustituimos los 0 por "unknown"
-'''
+# Sustituimos los datos ausentes por un 0 en la columna "model_year"
+# luego cambiamos el formato a int y por ultimo sustituimos los 0 por "unknown"
+
 
 df['model_year'] = df['model_year'].fillna(0)
 df['model_year'] = df['model_year'].astype('int')
 
-'''Sustituimos los datos ausentes por un 0 en la columna "cylinders" 
-luego cambiamos el formato a int y por ultimo sustituimos los 0 por "unknown"
-'''
+# Sustituimos los datos ausentes por un 0 en la columna "cylinders"
+# luego cambiamos el formato a int y por ultimo sustituimos los 0 por "unknown"
+
 
 df['cylinders'] = df['cylinders'].fillna(0)
 df['cylinders'] = df['cylinders'].astype('int')
 df['cylinders'] = df['cylinders'].replace(0, 'unknown')
 
-'''En la columna "odometer" cambiamos el formato a int'''
+# En la columna "odometer" cambiamos el formato a int
 
 df['odometer'] = df['odometer'].astype('Int64')
 
-'''Sustituimos los datos ausentes por "unknown" en la columna "cylinders" '''
+# Sustituimos los datos ausentes por "unknown" en la columna "cylinders" '''
 
 df['paint_color'] = df['paint_color'].fillna('unknown')
 
-'''Sustituimos los datos ausentes por "unknown" en la columna "is_4wd" 
-luego cambiamos el formato a object
-'''
+# Sustituimos los datos ausentes por "unknown" en la columna "is_4wd"
+# luego cambiamos el formato a object
 
 df['is_4wd'] = df['is_4wd'].fillna('unknown')
 df['is_4wd'] = df['is_4wd'].astype('object')
 
-'''cambiamos el formato de "date_posted" a datetime'''
+# cambiamos el formato de "date_posted" a datetime
 
 df['date_posted'] = pd.to_datetime(df['date_posted'], format='%Y-%m-%d')
 
 
-'''Hemos observado que habian datos en la columna model mal escritos 
-se realiza la correccion de los mismos para obtener los datos correctamente
-'''
+# Hemos observado que habian datos en la columna model mal escritos
+# se realiza la correccion de los mismos para obtener los datos correctamente
+
 
 df['model'] = df['model'].replace('ford f150', 'ford f-150')
 df['model'] = df['model'].replace(
