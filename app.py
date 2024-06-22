@@ -128,6 +128,4 @@ if table_prueba_button:
 
     st.write('Creating a prueba table for the car sale ads dataser')
 
-    fig = st.dataframe(df)
-
-    st.plotly_chart(fig, use_container_width=True)
+    st.dataframe(df)
