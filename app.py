@@ -50,59 +50,18 @@ df['model'] = df['model'].replace(
 df['model'] = df['model'].replace('ford f350', 'ford f-350')
 
 
+##############################################################################
+
+
 st.header('Vehicle Data Viewer')
 
+table_prueba_button = st.button('Contruct Prueba Table')
 
-hist_button = st.button('Construct histogram')  # crear un botón
+if table_prueba_button:
 
-if hist_button:
+    st.write('Creating a prueba table for the car sale ads dataser')
 
-    st.write(
-        'Creating a histogram for the car sale ads dataset')
-
-    # crear un histograma
-    fig = px.histogram(df, x="odometer")
-
-    # mostrar un gráfico Plotly interactivo
-    st.plotly_chart(fig, use_container_width=True)
-
-
-disp_button = st.checkbox('Build scatter chart')
-
-if disp_button:
-
-    st.write('Create a scatter chart for your car sale ads dataset')
-
-    fig = px.scatter(df, x='odometer')
-
-    st.plotly_chart(fig, use_container_width=True)
-
-
-table_checkbox = st.checkbox('Manufacturers with less than 1000 listings')
-
-if table_checkbox:
-
-    st.write('Create a table to visualize your car sale ads dataset')
-
-    df1 = df[df['days_listed'] < 1000]
-
-    fig = go.Figure(data=[go.Table(
-        header=dict(values=list(df1.columns),
-                    fill_color='paleturquoise',
-                    align='left'),
-        cells=dict(values=[df1.price, df1.model_year,
-                           df1.model,
-                           df1.condition, df1.cylinders,
-                           df1.fuel, df1.odometer,
-                           df1.transmission, df1.type,
-                           df1.paint_color, df1.is_4wd,
-                           df1.date_posted, df1.days_listed],
-                   fill_color='lavender',
-                   align='left'))
-    ])
-
-    # mostrar un gráfico Plotly interactivo
-    st.plotly_chart(fig, use_container_width=True)
+    st.dataframe(df)
 
 
 general_info_button = st.button('Construct Gerenal Info')  # crear un botón
@@ -122,10 +81,26 @@ if general_info_button:
     st.plotly_chart(fig, use_container_width=True)
 
 
-table_prueba_button = st.button('Contruct Prueba Table')
+disp_button = st.checkbox('Build scatter chart')
 
-if table_prueba_button:
+if disp_button:
 
-    st.write('Creating a prueba table for the car sale ads dataser')
+    st.write('Create a scatter chart for your car sale ads dataset')
 
-    st.dataframe(df)
+    fig = px.scatter(df, x='odometer')
+
+    st.plotly_chart(fig, use_container_width=True)
+
+
+hist_button = st.button('Construct histogram')  # crear un botón
+
+if hist_button:
+
+    st.write(
+        'Creating a histogram for the car sale ads dataset')
+
+    # crear un histograma
+    fig = px.histogram(df, x="odometer")
+
+    # mostrar un gráfico Plotly interactivo
+    st.plotly_chart(fig, use_container_width=True)
