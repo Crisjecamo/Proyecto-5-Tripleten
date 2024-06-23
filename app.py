@@ -136,6 +136,8 @@ if bar_button:
 
 st.header('Histogram of condition vs model year')
 
+df['model_year'] = df['model_year'].replace(0, 'unknown')
+
 his_button = st.button(
     'Create a histogram of the condition vs the year of the vehicle')
 
@@ -154,7 +156,7 @@ if his_button:
 
 st.header('Histogram of condition vs model year')
 
-his_button = st.button(
+his_button = st.checkbox(
     'Create a histogram of the condition vs the year of the vehicle')
 
 if his_button:
