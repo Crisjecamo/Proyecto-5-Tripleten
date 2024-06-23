@@ -96,6 +96,19 @@ x = {
     'Hyundai': df[df['model'].str.contains('hyundai', case=False)],
     'Jeep': df[df['model'].str.contains('jeep', case=False)],
     'Dodge': df[df['model'].str.contains('dodge', case=False)],
+    'Acura': df[df['model'].str.contains('acura', case=False)],
+    'BMW': df[df['model'].str.contains('bmw', case=False)],
+    'Cadillac': df[df['model'].str.contains('cadillac', case=False)],
+    'Chrysler': df[df['model'].str.contains('chrysler', case=False)],
+    'Honda': df[df['model'].str.contains('honda', case=False)],
+    'Kia': df[df['model'].str.contains('kia', case=False)],
+    'Chevrolet': df[df['model'].str.contains('chevrolet', case=False)],
+    'Ram': df[df['model'].str.contains('ram', case=False)],
+    'GMC': df[df['model'].str.contains('gmc', case=False)],
+    'Nissan': df[df['model'].str.contains('nissan', case=False)],
+    'Subaru': df[df['model'].str.contains('subaru', case=False)],
+    'Mercedes-Benz': df[df['model'].str.contains('mercedes-benz', case=False)],
+
 }
 
 # Crear un DataFrame combinando los DataFrames filtrados
