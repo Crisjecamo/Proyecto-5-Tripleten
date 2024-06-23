@@ -166,13 +166,13 @@ if his_button:
 
     # Crear los menús desplegables
 
-    articulo1 = st.selectbox("Selecciona el artículo 1", df2['marca'])
+    articulo1 = st.selectbox("Selecciona el artículo 1", df2['marca'].unique())
 
-    articulo2 = st.selectbox("Selecciona el artículo 2", df2['marca'])
+    articulo2 = st.selectbox("Selecciona el artículo 2", df2['marca'].unique())
 
     df_filtrado = df2[df2['marca'].isin([articulo1, articulo2])]
 
-    fig = px.histogram(df_filtrado, x='price', color=df2['marca'].unique(),
+    fig = px.histogram(df_filtrado, x='price', color='marca',
                        title='Comparación de precios entre artículos')
 
     st.plotly_chart(fig, use_container_width=True)
