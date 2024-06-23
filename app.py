@@ -90,31 +90,31 @@ st.header('Vehicle types by Manufacturer')
 
 bar_button = st.button('Create a chart with the manufacturer and vehicle type')
 
+x = {
+    'Toyota': df[df['model'].str.contains('toyota', case=False)],
+    'Ford': df[df['model'].str.contains('ford', case=False)],
+    'Hyundai': df[df['model'].str.contains('hyundai', case=False)],
+    'Jeep': df[df['model'].str.contains('jeep', case=False)],
+    'Dodge': df[df['model'].str.contains('dodge', case=False)],
+}
+
+# Crear un DataFrame combinando los DataFrames filtrados
+
+combined_df = pd.concat(x.values())
+
+# Crear una nueva columna 'marca' con las claves del diccionario
+
+combined_df['marca'] = combined_df['model'].apply(lambda model: next(
+    (marca for marca, df_marca in x.items() if model in df_marca['model'].values), None))
+
+# Calcular la cantidad de modelos por marca
+
+model_count_by_marca = combined_df.groupby(
+    ['marca', 'type'])['model'].count().reset_index()
+
 if bar_button:
 
     st.write('Creating Info manufacturer vehicle for the car sale ads dataset')
-
-    x = {
-        'Toyota': df[df['model'].str.contains('toyota', case=False)],
-        'Ford': df[df['model'].str.contains('ford', case=False)],
-        'Hyundai': df[df['model'].str.contains('hyundai', case=False)],
-        'Jeep': df[df['model'].str.contains('jeep', case=False)],
-        'Dodge': df[df['model'].str.contains('dodge', case=False)],
-    }
-
-    # Crear un DataFrame combinando los DataFrames filtrados
-
-    combined_df = pd.concat(x.values())
-
-    # Crear una nueva columna 'marca' con las claves del diccionario
-
-    combined_df['marca'] = combined_df['model'].apply(lambda model: next(
-        (marca for marca, df_marca in x.items() if model in df_marca['model'].values), None))
-
-    # Calcular la cantidad de modelos por marca
-
-    model_count_by_marca = combined_df.groupby(
-        ['marca', 'type'])['model'].count().reset_index()
 
     # Crear el gráfico de barras con colores según el tipo de vehículo
 
