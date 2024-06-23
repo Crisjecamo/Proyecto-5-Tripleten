@@ -53,29 +53,38 @@ df['model'] = df['model'].replace('ford f350', 'ford f-350')
 ##############################################################################
 
 
+# Esta línea crea un encabezado en la aplicación Streamlit con el texto “Vehicle Data Viewer”. Sirve como título para la sección o componente que sigue
 st.header('Vehicle Data Viewer')
 
+# Aquí se crea un botón con el texto “Create general data table”. Cuando el usuario hace clic en este botón, se activa la variable table_prueba_button
 table_prueba_button = st.button('Create general data table')
 
+# Esta línea verifica si el botón ha sido presionado (es decir, si table_prueba_button es verdadero). Si es así, se ejecuta el bloque de código que sigue.
 if table_prueba_button:
 
+    # Dentro del bloque condicional, se muestra un mensaje en la aplicación Streamlit que dice “Creating a table for the vehicle sale ads dataset”. Esto es opcional y se utiliza para proporcionar información adicional al usuario.
     st.write('Creating a table for the vehicle sale ads dataset')
 
+    # Finalmente, se muestra un DataFrame llamado df en la aplicación Streamlit. Este DataFrame contiene datos relacionados con anuncios de venta de vehículos.
     st.dataframe(df)
 
 ################################################################################################
 
+# Esta línea crea un encabezado en la aplicación Streamlit con el texto “Vehicle Data Graph”. Sirve como título para la sección o componente que sigue
 st.header('Vehicle Data Graph')
 
+# Aquí se crea un botón con el texto “Create a general data information graph”. Cuando el usuario hace clic en este botón, se activa la variable general_info_button
 general_info_button = st.button(
-    'Create a general data information graph')  # crear un botón
+    'Create a general data information graph')
 
+# Esta línea verifica si el botón ha sido presionado (es decir, si table_prueba_button es verdadero). Si es así, se ejecuta el bloque de código que sigue.
 if general_info_button:
 
+    # Dentro del bloque condicional, se muestra un mensaje en la aplicación Streamlit que dice “Creating the Overview Chart for the Vehicle Sale Ads Dataset”. Esto es opcional y se utiliza para proporcionar información adicional al usuario.
     st.write(
         'Creating the Overview Chart for the Vehicle Sale Ads Dataset')
 
-    # crear un histograma
+    # crear un grafico de dispersion
     fig = px.scatter(df, x="odometer", y="price",
                      size="model_year", color="type",
                      hover_data=["model", "model_year", "condition", "paint_color",
@@ -86,10 +95,13 @@ if general_info_button:
 
 ###############################################################################################
 
+# Esta línea crea un encabezado en la aplicación Streamlit con el texto “Vehicle types by Manufacturer”. Sirve como título para la sección o componente que sigue
 st.header('Vehicle types by Manufacturer')
 
+# Aquí se crea un botón con el texto “Create a chart with the manufacturer and vehicle type”. Cuando el usuario hace clic en este botón, se activa la variable bar_button
 bar_button = st.button('Create a chart with the manufacturer and vehicle type')
 
+# Realizamos un Diccionario para filtrar cada vehiculo por marca
 x = {
     'Toyota': df[df['model'].str.contains('toyota', case=False)],
     'Ford': df[df['model'].str.contains('ford', case=False)],
@@ -125,14 +137,16 @@ combined_df['marca'] = combined_df['model'].apply(lambda model: next(
 model_count_by_marca = combined_df.groupby(
     ['marca', 'type'])['model'].count().reset_index()
 
+# Esta línea verifica si el botón ha sido presionado (es decir, si bar_button es verdadero). Si es así, se ejecuta el bloque de código que sigue.
 if bar_button:
 
+    # Dentro del bloque condicional, se muestra un mensaje en la aplicación Streamlit que dice “Creating the Overview Chart for the Vehicle Sale Ads Dataset”. Esto es opcional y se utiliza para proporcionar información adicional al usuario.
     st.write('Creating Info manufacturer vehicle for the car sale ads dataset')
 
     # Crear el gráfico de barras con colores según el tipo de vehículo
 
     fig = px.bar(model_count_by_marca, x='marca', y='model',
-                 color='type', title='Cantidad de modelos por fabricante')
+                 color='type', title='Number of models by manufacturer')
 
     # Cambiar el nombre del eje 'y' a 'count'
 
@@ -147,19 +161,26 @@ if bar_button:
 
 ############################################################################################
 
+# Esta línea crea un encabezado en la aplicación Streamlit con el texto “Histogram of condition vs model year”. Sirve como título para la sección o componente que sigue
 st.header('Histogram of condition vs model year')
 
+# Realizamos el cambio de formato de nuestra columna a object simplemente remplazando 0 por 'unknown' para realizar el siguiente grafico
 df['model_year'] = df['model_year'].replace(0, 'unknown')
 
+# Aquí se crea un botón con el texto “Create a histogram of the condition vs the year of the vehicle”. Cuando el usuario hace clic en este botón, se activa la variable his_button
 his_button = st.button(
     'Create a histogram of the condition vs the year of the vehicle')
 
+# Esta línea verifica si el botón ha sido presionado (es decir, si bar_button es verdadero). Si es así, se ejecuta el bloque de código que sigue.
 if his_button:
 
+    # Dentro del bloque condicional, se muestra un mensaje en la aplicación Streamlit que dice “Creating the histogram”. Esto es opcional y se utiliza para proporcionar información adicional al usuario.
     st.write('Creating the histogram')
 
+    # Crear el histograma con colores según la condicion del vehículo
     fig = px.histogram(df, x="model_year", color="condition")
 
+    # Configuramos el rango del eje x
     fig.update_xaxes(range=[1920, 2020])
 
     # mostrar un gráfico Plotly interactivo
@@ -167,12 +188,17 @@ if his_button:
 
 ##############################################################################
 
+# Esta línea crea un encabezado en la aplicación Streamlit con el texto “Compare price distribution between manufacturer”. Sirve como título para la sección o componente que sigue
 st.header('Compare price distribution between manufacturer')
 
+# Aquí se crea un botón con el texto “Create a histogram of the price and the model of the vehiclecc”. Cuando el usuario hace clic en este botón, se activa la variable his_button
 his_button = st.checkbox(
     'Create a histogram of the price and the model of the vehicle')
 
+# Esta línea verifica si el botón ha sido presionado (es decir, si hist_button es verdadero). Si es así, se ejecuta el bloque de código que sigue.
 if his_button:
+
+    # Calcular la cantidad de modelos por marca
 
     df2 = combined_df.groupby(
         ['marca', 'price'])['model'].count().reset_index()
@@ -183,9 +209,12 @@ if his_button:
 
     articulo2 = st.selectbox("Selecciona el artículo 2", df2['marca'].unique())
 
+    # Agrupamos los menus desplegables en el dataset
     df_filtrado = df2[df2['marca'].isin([articulo1, articulo2])]
 
+    # Creamos el histograma con colores según la marca del vehículo
     fig = px.histogram(df_filtrado, x='price', color='marca',
-                       title='Comparación de precios entre artículos')
+                       title='Price distribution between vehicles')
 
+    # mostrar un gráfico Plotlby interactivo
     st.plotly_chart(fig, use_container_width=True)
