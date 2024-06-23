@@ -154,10 +154,10 @@ if his_button:
 
 ##############################################################################
 
-st.header('Histogram of condition vs model year')
+st.header('Compare price distribution between manufacturer')
 
 his_button = st.checkbox(
-    'Create a histogram of the condition vs the year of the vehicle')
+    'Create a histogram of the price and the model of the vehicle')
 
 if his_button:
 
@@ -172,7 +172,7 @@ if his_button:
 
     df_filtrado = df2[df2['marca'].isin([articulo1, articulo2])]
 
-    fig = px.bar(df_filtrado, x='marca', y='price', color='marca',
-                 title='Comparación de precios entre artículos')
+    fig = px.histogram(df_filtrado, x='price', color=df2['marca'].unique(),
+                       title='Comparación de precios entre artículos')
 
     st.plotly_chart(fig, use_container_width=True)
