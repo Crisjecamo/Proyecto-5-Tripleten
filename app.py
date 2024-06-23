@@ -55,11 +55,11 @@ df['model'] = df['model'].replace('ford f350', 'ford f-350')
 
 st.header('Vehicle Data Viewer')
 
-table_prueba_button = st.button('Contruct Prueba Table')
+table_prueba_button = st.button('Contruct Table date car')
 
 if table_prueba_button:
 
-    st.write('Creating a prueba table for the car sale ads dataser')
+    st.write('Creating a table for the car sale ads dataser')
 
     st.dataframe(df)
 
@@ -72,10 +72,55 @@ if general_info_button:
         'Creating a General info for the car sale ads dataset')
 
     # crear un histograma
-    fig = px.scatter(df[df['days_listed'] < 1000], x="odometer", y="price",
+    fig = px.scatter(df, x="odometer", y="price",
                      size="model_year", color="type",
                      hover_data=["model", "model_year", "condition", "paint_color",
                                  "fuel", "cylinders", "is_4wd", "transmission"],)
+
+    # mostrar un gráfico Plotly interactivo
+    st.plotly_chart(fig, use_container_width=True)
+
+
+bar_button = st.button('Construct Info manufacturer vehicle')
+
+if bar_button:
+
+    st.write('Creating Info manufacturer vehicle for the car sale ads dataset')
+
+    x = {
+        'Toyota': df[df['model'].str.contains('toyota', case=False)],
+        'Ford': df[df['model'].str.contains('ford', case=False)],
+        'Hyundai': df[df['model'].str.contains('hyundai', case=False)],
+        'Jeep': df[df['model'].str.contains('jeep', case=False)],
+        'Dodge': df[df['model'].str.contains('dodge', case=False)],
+    }
+
+    # Crear un DataFrame combinando los DataFrames filtrados
+
+    combined_df = pd.concat(x.values())
+
+    # Crear una nueva columna 'marca' con las claves del diccionario
+
+    combined_df['marca'] = combined_df['model'].apply(lambda model: next(
+        (marca for marca, df_marca in x.items() if model in df_marca['model'].values), None))
+
+    # Calcular la cantidad de modelos por marca
+
+    model_count_by_marca = combined_df.groupby(
+        ['marca', 'type'])['model'].count().reset_index()
+
+    # Crear el gráfico de barras con colores según el tipo de vehículo
+
+    fig = px.bar(model_count_by_marca, x='marca', y='model',
+                 color='type', title='Cantidad de modelos por fabricante')
+
+    # Cambiar el nombre del eje 'y' a 'count'
+
+    fig.update_yaxes(title_text='count')
+
+    # Cambiar el nombre del eje x a 'manufacturer'
+
+    fig.update_xaxes(title_text='manufacturer')
 
     # mostrar un gráfico Plotly interactivo
     st.plotly_chart(fig, use_container_width=True)
