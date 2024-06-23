@@ -55,21 +55,25 @@ df['model'] = df['model'].replace('ford f350', 'ford f-350')
 
 st.header('Vehicle Data Viewer')
 
-table_prueba_button = st.button('Contruct Table date car')
+table_prueba_button = st.button('Create general data table')
 
 if table_prueba_button:
 
-    st.write('Creating a table for the car sale ads dataser')
+    st.write('Creating a table for the vehicle sale ads dataset')
 
     st.dataframe(df)
 
+################################################################################################
 
-general_info_button = st.button('Construct Gerenal Info')  # crear un botón
+st.header('Vehicle Data Graph')
+
+general_info_button = st.button(
+    'Create a general data information graph')  # crear un botón
 
 if general_info_button:
 
     st.write(
-        'Creating a General info for the car sale ads dataset')
+        'Creating the Overview Chart for the Vehicle Sale Ads Dataset')
 
     # crear un histograma
     fig = px.scatter(df, x="odometer", y="price",
@@ -80,8 +84,11 @@ if general_info_button:
     # mostrar un gráfico Plotly interactivo
     st.plotly_chart(fig, use_container_width=True)
 
+###############################################################################################
 
-bar_button = st.button('Construct Info manufacturer vehicle')
+st.header('Vehicle types by Manufacturer')
+
+bar_button = st.button('Create a chart with the manufacturer and vehicle type')
 
 if bar_button:
 
@@ -125,27 +132,45 @@ if bar_button:
     # mostrar un gráfico Plotly interactivo
     st.plotly_chart(fig, use_container_width=True)
 
+############################################################################################
 
-disp_button = st.checkbox('Build scatter chart')
+st.header('Histogram of condition vs model year')
 
-if disp_button:
+his_button = st.button(
+    'Create a histogram of the condition vs the year of the vehicle')
 
-    st.write('Create a scatter chart for your car sale ads dataset')
+if his_button:
 
-    fig = px.scatter(df, x='odometer')
+    st.write('Creating the histogram')
 
-    st.plotly_chart(fig, use_container_width=True)
+    fig = px.histogram(df, x="model_year", color="condition")
 
-
-hist_button = st.button('Construct histogram')  # crear un botón
-
-if hist_button:
-
-    st.write(
-        'Creating a histogram for the car sale ads dataset')
-
-    # crear un histograma
-    fig = px.histogram(df, x="odometer")
+    fig.update_xaxes(range=[1920, 2020])
 
     # mostrar un gráfico Plotly interactivo
+    st.plotly_chart(fig, use_container_width=True)
+
+##############################################################################
+
+st.header('Histogram of condition vs model year')
+
+his_button = st.button(
+    'Create a histogram of the condition vs the year of the vehicle')
+
+if his_button:
+
+    df2 = combined_df.groupby(
+        ['marca', 'price'])['model'].count().reset_index()
+
+    # Crear los menús desplegables
+
+    articulo1 = st.selectbox("Selecciona el artículo 1", df2['marca'])
+
+    articulo2 = st.selectbox("Selecciona el artículo 2", df2['marca'])
+
+    df_filtrado = df2[df2['marca'].isin([articulo1, articulo2])]
+
+    fig = px.bar(df_filtrado, x='marca', y='price', color='marca',
+                 title='Comparación de precios entre artículos')
+
     st.plotly_chart(fig, use_container_width=True)
